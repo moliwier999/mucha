@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEON WAVE</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #080808;
+    color: white;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(8,8,8,.9);
+    backdrop-filter: blur(10px);
+}
+
+nav {
+    max-width: 1200px;
+    margin: auto;
+    padding: 22px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #ff1744;
+}
+
+nav ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: #ff1744;
+}
+
+.hero {
+    min-height: 100vh;
+    padding: 150px 10%;
+    display: flex;
+    align-items: center;
+    background:
+        radial-gradient(circle at 80% 50%, #650021, transparent 45%),
+        #080808;
+}
+
+.hero-content p,
+.number {
+    color: #ff1744;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.hero h1 {
+    margin-top: 20px;
+    font-size: clamp(80px,14vw,180px);
+    line-height: .8;
+    letter-spacing: -8px;
+}
+
+.hero h1 span,
+h2 span {
+    color: #ff1744;
+}
+
+.hero h2 {
+    margin: 35px 0;
+    font-size: 18px;
+    letter-spacing: 5px;
+    color: #aaa;
+}
+
+.button {
+    display: inline-block;
+    padding: 16px 30px;
+    background: #ff1744;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.button:hover {
+    background: white;
+    color: black;
+}
+
+.section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 120px 30px;
+}
+
+.section h2,
+.contact h2 {
+    margin: 20px 0 70px;
+    font-size: clamp(50px,7vw,90px);
+    line-height: .95;
+}
+
+.about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+}
+
+.about > div:first-child p {
+    color: #999;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.members {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.members > div {
+    padding: 30px;
+    border: 1px solid #292929;
+    transition: .3s;
+}
+
+.members > div:hover {
+    border-color: #ff1744;
+    transform: translateY(-5px);
+}
+
+.members small {
+    color: #ff1744;
+}
+
+.members h3 {
+    margin-top: 25px;
+    font-size: 25px;
+}
+
+.members p {
+    margin-top: 8px;
+    color: #777;
+}
+
+.music {
+    max-width: none;
+    background: #101010;
+    padding-left: max(30px,calc((100% - 1140px)/2));
+    padding-right: max(30px,calc((100% - 1140px)/2));
+}
+
+.song {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 25px 0;
+    border-bottom: 1px solid #292929;
+}
+
+.song > span {
+    width: 50px;
+    color: #555;
+}
+
+.song div {
+    flex: 1;
+}
+
+.song h3 {
+    font-size: 23px;
+}
+
+.song p {
+    margin-top: 5px;
+    color: #777;
+}
+
+.song button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: #ff1744;
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.song button:hover {
+    background: white;
+    color: black;
+    transform: scale(1.1);
+}
+
+#player {
+    margin-top: 25px;
+    color: #ff1744;
+}
+
+.concert {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 30px 0;
+    border-bottom: 1px solid #292929;
+}
+
+.date {
+    width: 80px;
+}
+
+.date strong {
+    display: block;
+    font-size: 45px;
+}
+
+.date span {
+    color: #ff1744;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.concert h3 {
+    font-size: 24px;
+}
+
+.concert p {
+    margin-top: 7px;
+    color: #777;
+}
+
+.contact {
+    padding: 150px 30px;
+    text-align: center;
+    background: linear-gradient(135deg,#ff1744,#760020);
+}
+
+.contact .number {
+    color: white;
+}
+
+.contact h2 {
+    margin-bottom: 25px;
+}
+
+.contact > p:not(.number) {
+    font-size: 20px;
+}
+
+.socials {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.socials a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    padding: 35px 30px;
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+}
+
+footer div {
+    color: white;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+@media (max-width:700px) {
+    nav ul {
+        display: none;
+    }
+
+    .hero {
+        padding: 130px 30px 80px;
+    }
+
+    .hero h1 {
+        font-size: 75px;
+        letter-spacing: -5px;
+    }
+
+    .about {
+        grid-template-columns: 1fr;
+    }
+
+    .members {
+        grid-template-columns: 1fr;
+    }
+
+    .concert {
+        gap: 20px;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+    <div class="logo">NEON WAVE</div>
+
+    <ul>
+        <li><a href="#start">Start</a></li>
+        <li><a href="#onas">O nas</a></li>
+        <li><a href="#muzyka">Muzyka</a></li>
+        <li><a href="#koncerty">Koncerty</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+</nav>
+</header>
+
+<section id="start" class="hero">
+<div class="hero-content">
+    <p>OFICJALNA STRONA ZESPOŁU</p>
+
+    <h1>
+        NEON<br>
+        <span>WAVE</span>
+    </h1>
+
+    <h2>MUZYKA. ENERGIA. EMOCJE.</h2>
+
+    <a href="#onas" class="button">POZNAJ NAS</a>
+</div>
+</section>
+
+<section id="onas" class="section">
+    <p class="number">01 — O NAS</p>
+
+    <h2>
+        Tworzymy muzykę,<br>
+        <span>która zostaje.</span>
+    </h2>
+
+    <div class="about">
+
+        <div>
+            <p>
+                NEON WAVE to czteroosobowy zespół muzyczny
+                z Krakowa. Łączymy rockowe brzmienie
+                z nowoczesnym podejściem do muzyki.
+            </p>
+
+            <p>
+                Gramy własne utwory i koncertowe wersje
+                największych przebojów.
+            </p>
+        </div>
+
+        <div class="members">
+
+            <div>
+                <small>01</small>
+                <h3>ADAM</h3>
+                <p>Wokal / Gitara</p>
+            </div>
+
+            <div>
+                <small>02</small>
+                <h3>MAKS</h3>
+                <p>Gitara</p>
+            </div>
+
+            <div>
+                <small>03</small>
+                <h3>OLIWIA</h3>
+                <p>Gitara basowa</p>
+            </div>
+
+            <div>
+                <small>04</small>
+                <h3>FILIP</h3>
+                <p>Perkusja</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="muzyka" class="section music">
+
+    <p class="number">02 — MUZYKA</p>
+
+    <h2>
+        Nasze <span>utwory.</span>
+    </h2>
+
+    <div class="song">
+        <span>01</span>
+
+        <div>
+            <h3>Midnight Lights</h3>
+            <p>NEON WAVE</p>
+        </div>
+
+        <button onclick="playSong('Midnight Lights')">▶</button>
+    </div>
+
+    <div class="song">
+        <span>02</span>
+
+        <div>
+            <h3>Electric Heart</h3>
+            <p>NEON WAVE</p>
+        </div>
+
+        <button onclick="playSong('Electric Heart')">▶</button>
+    </div>
+
+    <div class="song">
+        <span>03</span>
+
+        <div>
+            <h3>Runaway</h3>
+            <p>NEON WAVE</p>
+        </div>
+
+        <button onclick="playSong('Runaway')">▶</button>
+    </div>
+
+    <p id="player"></p>
+
+</section>
+
+<section id="koncerty" class="section">
+
+    <p class="number">03 — KONCERTY</p>
+
+    <h2>
+        Najbliższe <span>koncerty.</span>
+    </h2>
+
+    <div class="concert">
+
+        <div class="date">
+            <strong>12</strong>
+            <span>PAŹ</span>
+        </div>
+
+        <div>
+            <h3>Klub Muzyczny</h3>
+            <p>Kraków, Polska — 20:00</p>
+        </div>
+
+    </div>
+
+    <div class="concert">
+
+        <div class="date">
+            <strong>25</strong>
+            <span>PAŹ</span>
+        </div>
+
+        <div>
+            <h3>Rock Festival</h3>
+            <p>Warszawa, Polska — 19:00</p>
+        </div>
+
+    </div>
+
+    <div class="concert">
+
+        <div class="date">
+            <strong>08</strong>
+            <span>LIS</span>
+        </div>
+
+        <div>
+            <h3>Live Stage</h3>
+            <p>Katowice, Polska — 21:00</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="kontakt" class="contact">
+
+    <p class="number">04 — KONTAKT</p>
+
+    <h2>
+        Zagrajmy <span>razem.</span>
+    </h2>
+
+    <p>kontakt@neonwave.pl</p>
+
+    <div class="socials">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">YouTube</a>
+    </div>
+
+</section>
+
+<footer>
+    <div>NEON WAVE</div>
+    <p>© 2026 NEON WAVE</p>
+</footer>
+
+<script>
+function playSong(songName) {
+    document.getElementById("player").textContent =
+        "▶ Odtwarzanie: " + songName;
+}
+</script>
+
+</body>
+</html>
